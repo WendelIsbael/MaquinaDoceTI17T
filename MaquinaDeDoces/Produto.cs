@@ -225,14 +225,16 @@ namespace MaquinaDeDoces
         
         public Boolean SolicitarProduto(int codigo)
         {
-            if(ModificarCodigo == codigo)
-            {
+            Boolean flag = false;
+
+                if(ModificarCodigo == codigo)
+                {
                 if (ModificarQuantidade <= 3)
                 {
                     return true;
                 }
-            }
-            return false;
+                }
+            return flag;
             
         }
 
