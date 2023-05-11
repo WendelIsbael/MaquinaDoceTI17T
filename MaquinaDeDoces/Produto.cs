@@ -24,7 +24,7 @@ namespace MaquinaDeDoces
         // O metodo construtor serve para instanciar as variaveis ou seja dar um valor inicial para elas.
         public Produto()
         {
-            ModifcarCodigo           = 0;
+            ModificarCodigo           = 0;
             ModificarNome            = "";
             ModificarDescricao       = "";
             ModificarPreco           = 0;
@@ -38,7 +38,7 @@ namespace MaquinaDeDoces
         public Produto (int codigo,string nome, string descricao,
             double preco, int quantidade, DateTime dtValidade, Boolean situacao)
         {
-            ModifcarCodigo          = codigo;
+            ModificarCodigo         = codigo;
             ModificarNome           = nome;
             ModificarDescricao      = descricao;
             ModificarPreco          = preco;
@@ -52,7 +52,7 @@ namespace MaquinaDeDoces
         // Metodos de acesso e modificação
 
 
-        public int ModifcarCodigo
+        public int ModificarCodigo
         {
             get{
                 return this.codigo;
@@ -105,8 +105,6 @@ namespace MaquinaDeDoces
             set { this.situacao = value;}
         } // Fim do ModificarSituacao
 
-        public int ModificarCodigo { get; private set; }
-
 
 
         // Metodo Cadastrar Produto
@@ -121,7 +119,7 @@ namespace MaquinaDeDoces
                 Boolean situacao
             )
         {
-            ModifcarCodigo      = codigo;
+            ModificarCodigo     = codigo;
             ModificarNome       = nome;    
             ModificarDescricao  = descricao;    
             ModificarPreco      = preco;  
@@ -135,9 +133,9 @@ namespace MaquinaDeDoces
         public string ConsultarPrtoduto(int codigo)
         {
             string msg = ""; // Criação de uma variavel Local
-            if (ModifcarCodigo == codigo)
+            if (ModificarCodigo == codigo)
             {
-                msg = "\nCódigo: "              + ModifcarCodigo      +
+                msg = "\nCódigo: "              + ModificarCodigo +
                       "\nNome: "                + ModificarNome       +
                       "\nDescrição: "           + ModificarDescricao  +
                       "\nPreço: "               + ModificarPreco      +
@@ -159,7 +157,7 @@ namespace MaquinaDeDoces
         {
              Boolean flag = false;
 
-                if (ModifcarCodigo == codigo)
+                if (ModificarCodigo == codigo)
                 {
                     switch (campo)
                     {
