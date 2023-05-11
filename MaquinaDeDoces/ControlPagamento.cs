@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace MaquinaDeDoces
 {
-    internal class ControlPagamento
+    class ControlPagamento
     {
-        Pagamento pagmen = new Pagamento();
-
-        public 
+        Pagamento pag = new Pagamento(); // Criando um link com o Pagamento
     }
 }

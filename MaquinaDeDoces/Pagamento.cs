@@ -119,19 +119,19 @@ namespace MaquinaDeDoces
         public string VerificarTroco(double valorMinimo)
         {
             ModificarValorMinimo = valorMinimo;
-
-            {
+            
                 string msg = ""; // Criação de uma variavel Local
-                Boolean flag = false;
+                Boolean flag = true;
+
                 if (valorMinimo < 50)
                 {
                     msg = "Impossivel Realizar pagamento via dinheiro";
-                    
+                    flag = false;
                 }
-                 // Fim do Sé
-                return msg;
-            } // Fim do Método
-        }
+                // Fim do Sé
+                return msg; 
+
+        } // Fim do Método
 
         public double EfetuarPagamento( double valorTotal, double valorDeTroco)
         {
