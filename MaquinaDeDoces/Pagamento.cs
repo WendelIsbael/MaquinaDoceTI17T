@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,98 +9,82 @@ namespace MaquinaDeDoces
 {
     class Pagamento
     {
-        // Decalarando as Variaveis
         private int codigo;
-        private string descricao;
         private double valorTotal;
-        private short formaPagamento;
-        private DateTime horaPagamento;
+        private short formaDePagamento;
+        private DateTime dataHora;
         private int codCartao;
         private short bandeiraCartao;
-        private double trocoInicial;
-        private double ;
+        private double trocoMaquina;
+        private double troco;
 
-
-        // Metodo Construtor
-        public Pagamento ()
+        //Criação do construtor
+        public Pagamento()
         {
             ModificarCodigo = 0;
-            ModificarDescricao = "";
             ModificarValorTotal = 0;
             ModificarFormaPagamento = 0;
-            ModificarHoraPagamento = new DateTime();
-            ModificarCodCartao = 0;
+            ModificarDataHora = new DateTime();
+            ModificarCodigoCartao = 0;
             ModificarBandeiraCartao = 0;
-            ModificarTrocoInicial = 100;
-            ModificarValorDoTroco = 0;
+            ModificarTrocoMaquina = 100;
+            ModificarTroco = 0;
+        }//fim do construtor
 
-        }// Fim do metodo construtor
+        //Métodos Gets e Sets
 
-
-        // Encapsulando as variaveis atraves do get set
+        public double ModificarTroco
+        {
+            get { return troco; }
+            set { this.troco = value; }
+        }//fim do método Troco        
 
         public int ModificarCodigo
         {
             get { return this.codigo; }
             set { this.codigo = value; }
-        } // Fim do ModificarCodigo
-
-        public string ModificarDescricao
-        {
-            get { return this.descricao; }
-            set { this.descricao = value;}
-        } // FIm do ModificarDescricao
+        }//fim do ModificarCodigo
 
         public double ModificarValorTotal
         {
             get { return this.valorTotal; }
-            set { this.valorTotal = value;}
-        } // Fim do ModificarValorTotal
+            set { this.valorTotal = value; }
+        }//fim do ModificarCodigo
 
         public short ModificarFormaPagamento
         {
-            get { return this.formaPagamento;}
-            set { this.formaPagamento= value;}
-        } // Fim do ModificarFormaPagamento
+            get { return this.formaDePagamento; }
+            set { this.formaDePagamento = value; }
+        }//fim do ModificarCodigo
 
-        public DateTime ModificarHoraPagamento
+        public DateTime ModificarDataHora
         {
-            get { return this.horaPagamento; }
-            set { this.horaPagamento = value; }
-        } // Fim do ModificarHoraPagamento
+            get { return this.dataHora; }
+            set { this.dataHora = value; }
+        }//fim do ModificarCodigo
 
-        public int ModificarCodCartao
+        public int ModificarCodigoCartao
         {
             get { return this.codCartao; }
-            set { this.codCartao = value;}
-        } // Fim do ModificarCodCartão
+            set { this.codCartao = value; }
+        }//fim do ModificarCodigo
 
         public short ModificarBandeiraCartao
         {
             get { return this.bandeiraCartao; }
             set { this.bandeiraCartao = value; }
-        } // Fim do ModificarBandeiraCartão
+        }//fim do ModificarCodigo
 
-        public double ModificarTrocoInicial
+        public double ModificarTrocoMaquina
         {
-            get { return this.trocoInicial; }    
-            set { this.trocoInicial = value;}
-        } // Fim do ModificarTrocoInicial
+            get { return this.trocoMaquina; }
+            set { this.trocoMaquina = value; }
+        }//fim do método modificarTrocoMaquina
 
-
-        public double ModificarValorDoTroco
-        {
-            get { return this.valorDoTroco; }
-            set { this.valorDoTroco = value; }
-        }
-
-        // Fim do encapsulamento 
-
-
-        // Metodo VerificarNotas
+        //Método do modelo de negócio
         public string VerificarNotas(double entradaDinheiro, double valorProduto)
         {
-            if(entradaDinheiro > valorProduto)
+            if (entradaDinheiro >= valorProduto)
             {
                 return "OK";
             }
@@ -107,87 +92,77 @@ namespace MaquinaDeDoces
             {
                 return "NOK";
             }
-        }
-        // fim do VerificarNotas
+        }//fim do verificarNotas 
 
-
-        public Boolean ExisteTroco(double entradaDinherio, double valorProduto)
+        public Boolean ExisteTroco(double entradaDinheiro, double valorProduto)
         {
-            string resposta = VerificarNotas(entradaDinherio, valorProduto);
-
-            if (entradaDinherio > valorProduto)
+            if (entradaDinheiro > valorProduto)
             {
                 return true;
             }
             return false;
-        }
-        //Fim do VerificarTroco
+        }//fim do existeTroco
 
-
-        public string VerificarTroco (double entradaDinheiro, double valorProduto)
+        public void VerificarTroco(double entradaDinheiro, double valorProduto)
         {
-           
             Boolean respTroco = false;
             respTroco = ExisteTroco(entradaDinheiro, valorProduto);
-           
-                
-                if ((respTroco == true) && ((entradaDinheiro - valorProduto) < ModificarTrocoInicial))
-                {
-                    return "Troco: " + (entradaDinheiro - valorProduto);
-                }
-                else if (( entradaDinheiro - valorProduto) >= ModificarTrocoInicial)
-                {
-                    return "Impossivel realizar a operação com dinheiro, por favor tente outra forma de pagamento";
-                }
-                return "Não a Troco";
-                // Fim do if
+            if (respTroco == true)
+            {
+                ModificarTroco = entradaDinheiro - valorProduto;
+            }
+            else
+            {
+                ModificarTroco = 0;
+            }
+        }//fim do verificarTroco
 
-        }// fim do verificarTroco
-        
-        
-        public string MenuEscolherFormaPagamento()
+        public string MenuFormaDePagamento()
         {
             return "Escolha uma das opções abaixo: " + "\n1. Dinheiro \n2. Cartão";
-        }// Fim do metodo
+        }//fim do método
 
-        public void ColetarFormaPagamento(short opcao)
+        public void ColetarFormaDePagamento(short opcao)
         {
-            ModificarFormaPagamento = (opcao);
+            ModificarFormaPagamento = opcao;
+        }//fim do coletar
 
-        }
-
-
-        // Inicio do EfetuarPagamento
-        public string EfetuarPagamento( double entradaPagamento, double valorProqduto)
+        public void EfetuarPagamentoDinheiro(double entradaPagamento, double valorProduto)
         {
             string resp = "";
+            resp = VerificarNotas(entradaPagamento, valorProduto);
 
-            switch (opcao)
+            if (resp == "OK")
             {
-                case 1:
-                resp = VerificarNotas(entradaPagamento, valorProqduto);
-                if (resp == "OK")
-                {
-                    VerificarTroco(entradaPagamento, valorProqduto);
-                        ModificarCodigo = ModificarCodigo + 1;
-                        ModificarValorTotal = valorProqduto;
-                        ModificarFormaPagamento = opcao;
+                ModificarCodigo++;
+                ModificarValorTotal = valorProduto;
+                ModificarFormaPagamento = 1;
+                ModificarDataHora = DateTime.Now;//Pegar a data e hora da transação
+                ModificarTrocoMaquina += valorProduto;
+                VerificarTroco(entradaPagamento, valorProduto);
+                imprimir();
+            }
+        }//fim do método Efetuar Pagamento
 
-                }   
-                else
-                {
+        public void EfetuarPagamentoCartao(double entradaPagamento, double valorProduto, int codCartao, short bandeiraCartao)
+        {
+            ModificarCodigo++;
+            ModificarValorTotal = valorProduto;
+            ModificarFormaPagamento = 2;
+            ModificarDataHora = DateTime.Now;//Pegar a data e hora da transação
+            ModificarBandeiraCartao = bandeiraCartao;
+            ModificarCodigoCartao = codCartao;
+            imprimir();
+        }//fim do efetuarPagamento Cartão
 
-                }
-            } 
-            
-            
-
-
-
-            
-        }
-
-
-
-    }// Fim da Classe
-} // Fim do projeto
+        //Método Imprimir
+        public string imprimir()
+        {
+            return "Código: " + ModificarCodigo +
+                   "\nValor Total: R$ " + ModificarValorTotal +
+                   "\nTroco: R$ " + ModificarTroco +
+                   "\nForma de Pagamento: " + ModificarFormaPagamento +
+                   "\nData e Hora: " + ModificarDataHora;
+        }//fim do método Imprimir
+    }//Fim da Classe
+}//fimDoProjeto
