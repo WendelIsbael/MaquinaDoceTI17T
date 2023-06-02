@@ -11,10 +11,10 @@ namespace MaquinaDeDoces
         static void Main(string[] args)
         {
             // Conectando com a classe Produto
-            ControlProduto controlProd = new ControlProduto();
+            ControlPagamento controlPgto = new ControlPagamento();
 
             //Chmando o metodo Principal operação
-            controlProd.Operacao();
+            controlPgto.Operacao();
 
             // Mantem a janeqla aberta, mas e o mesmo que o leia esperando que o usuario digite algo
             Console.ReadLine(); 
